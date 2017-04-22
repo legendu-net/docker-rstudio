@@ -1,17 +1,18 @@
-FROM dclong/r-dev
+FROM dclong/r-base
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends git wget \
+    && apt-get install -y --no-install-recommends wget \
     && rstudio_version=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/rstudio-server/current.ver) \
     && wget https://download2.rstudio.org/rstudio-server-${rstudio_version}-amd64.deb -O /rstudio-server.deb \
     && apt-get install -y --no-install-recommends /rstudio-server.deb \
-    && rm /rstudio-server.deb \
-    # configure a non-root user for RStudio
-    && useradd rstudio \
+    && rm /rstudio-server.deb 
+
+# configure a non-root user for RStudio
+RUN useradd rstudio \
     && echo "rstudio:rstudio" | chpasswd \
     && mkdir /home/rstudio \
     && chown rstudio:rstudio /home/rstudio \
-    && addgroup rstudio staff \ 
+    && gpasswd -a rstudio staff \ 
     && apt-get autoremove \
     && apt-get autoclean 
 
