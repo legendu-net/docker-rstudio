@@ -1,6 +1,6 @@
 # dclong/rstudio
 
-RStudio Server (with many popular R packages installed).
+RStudio Server (with R base).
 
 ## About the Author
 
