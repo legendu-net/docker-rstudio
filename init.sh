@@ -4,7 +4,7 @@ USER_ID=${DOCKER_USER_ID:-9001}
 USER=${DOCKER_USER:-dclong}
 PASSWORD=${DOCKER_PASSWORD:-123}
 useradd -o -u $USER_ID -d /home/$USER -s /bin/bash -c "$USER" $USER 
-adduser $USER sudo 
+gpasswd -a $USER sudo
 mkdir -p /home/$USER 
 chown $USER:$USER /home/$USER 
 echo ${USER}:${PASSWORD} | chpasswd
