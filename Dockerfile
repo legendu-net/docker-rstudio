@@ -15,5 +15,5 @@ ADD Rprofile.site /usr/local/lib/R/etc/
 ADD init.sh /
 ADD script.sh /
 
-ENTRYPOINT ["init.sh"]
+ENTRYPOINT ["/init.sh"]
 
