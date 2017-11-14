@@ -1,4 +1,4 @@
-# dclong/rstudio
+# [dclong/rstudio](https://hub.docker.com/r/dclong/rstudio/)
 
 RStudio Server (with R base).
 
