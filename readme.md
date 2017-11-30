@@ -11,13 +11,17 @@ RStudio Server (with R base).
 Run the docker with one of the following commands.
 
 ```
-docker run -d -p 8888:8888 \
+docker run -d \
+    --log-opt max-size=50m \
+    -p 8888:8888 \
     -v /wwwroot:/wwwroot \
     dclong/rstudio 
 ```
 
 ```
-docker run -d -p 8888:8888 \
+docker run -d \
+    --log-opt max-size=50m \
+    -p 8888:8888 \
     -e DOCKER_USER=`id -un` \
     -e DOCKER_USER_ID=`id -u` \
     -e DOCKER_PASSWORD=`id -un` \
@@ -25,7 +29,9 @@ docker run -d -p 8888:8888 \
     dclong/rstudio
 ```
 ```
-docker run -d -p 8888:8888 \
+docker run -d \
+    --log-opt max-size=50m \
+    -p 8888:8888 \
     -e DOCKER_USER=`id -un` \
     -e DOCKER_USER_ID=`id -u` \
     -v /wwwroot:/wwwroot \
