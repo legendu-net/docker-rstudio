@@ -13,7 +13,7 @@ Run the docker with one of the following commands.
 ```
 docker run -d \
     --log-opt max-size=50m \
-    -p 8888:8888 \
+    -p 8787:8787 \
     -e DOCKER_USER=`id -un` \
     -e DOCKER_USER_ID=`id -u` \
     -e DOCKER_PASSWORD=`id -un` \
