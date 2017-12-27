@@ -1,6 +1,6 @@
 # [dclong/rstudio](https://hub.docker.com/r/dclong/rstudio/)
 
-RStudio Server (with R base).
+RStudio Server (with R base and popular packages).
 
 ## About the Author
 
