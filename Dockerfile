@@ -1,4 +1,4 @@
-FROM dclong/r-base
+FROM dclong/r-pop
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends wget \
@@ -12,8 +12,7 @@ EXPOSE 8787
 ADD Rprofile.site /usr/local/lib/R/etc/
 # ADD userconf.sh /etc/cont-init.d/conf
 # ADD rstudio /etc/services.d/
-ADD init.sh /
-ADD script.sh /
+ADD launch.sh /scripts/
 
-ENTRYPOINT ["/init.sh"]
+ENTRYPOINT ["/scripts/init.sh"]
 
