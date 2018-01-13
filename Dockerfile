@@ -1,4 +1,4 @@
-FROM dclong/r-pop
+FROM dclong/r-pop:dev
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends wget \
