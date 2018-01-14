@@ -1,6 +1,6 @@
 # [dclong/rstudio](https://hub.docker.com/r/dclong/rstudio/)
 
-RStudio Server (with R base and popular packages).
+RStudio Server (with R base and packages for text mining).
 
 ## About the Author
 
@@ -18,7 +18,7 @@ docker run -d \
     -e DOCKER_USER_ID=`id -u` \
     -e DOCKER_PASSWORD=`id -un` \
     -v /wwwroot:/wwwroot \
-    dclong/rstudio
+    dclong/rstudio:tm
 ```
 ## Image Tree Related to [dclong/rstudio](https://hub.docker.com/r/dclong/rstudio/)
 
