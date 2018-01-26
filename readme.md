@@ -20,6 +20,17 @@ docker run -d \
     -v /wwwroot:/wwwroot \
     dclong/rstudio:tm
 ```
+
+```
+docker run -d \
+    --log-opt max-size=50m \
+    -p 8787:8787 \
+    -e DOCKER_USER=`id -un` \
+    -e DOCKER_USER_ID=`id -u` \
+    -e DOCKER_PASSWORD=`id -un` \
+    -v /wwwroot:/wwwroot \
+    registry.docker-cn.com/dclong/rstudio:tm
+```
 ## Image Tree Related to [dclong/rstudio](https://hub.docker.com/r/dclong/rstudio/)
 
 [dclong/ubuntu_b](https://hub.docker.com/r/dclong/ubuntu_b/)
