@@ -58,6 +58,7 @@ The recommended working directory in the Docker container is `/workdir`.
 
 ```
 docker run -d \
+    --name rstudio \
     --log-opt max-size=50m \
     -p 8787:8787 \
     -e DOCKER_USER=`id -un` \
@@ -69,6 +70,7 @@ docker run -d \
 ```
 ```
 docker run -d \
+    --name rstudio \
     --log-opt max-size=50m \
     -p 8787:8787 \
     -e DOCKER_USER=`id -un` \
