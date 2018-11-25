@@ -1,10 +1,12 @@
 # [dclong/rstudio](https://hub.docker.com/r/dclong/rstudio/)
 
-RStudio Server (with R base and popular packages).
+RStudio Server (with popular packages) in Docker.
+**It is suggested that you use [dclong/jupyterhub-ds](https://hub.docker.com/r/dclong/jupyterhub-ds/)
+for data science related work.**
 
 ## Detailed Information
 
-OS: the latest Ubuntu LTS  
+OS: Ubuntu 18.04  
 Desktop Environment: None  
 Remote Desktop: None  
 Addtional: R (with popular packages) and latest RStudio.
@@ -55,30 +57,41 @@ Keep the default if you don't know what are the best to use.
     By default, it's the group ID of the current user on the host.
 
 The recommended working directory in the Docker container is `/workdir`.
+You can mount directory on the host to it as you wish.
 
+The following command starts a container 
+and mounts the current working directory and `/home` on the host machine 
+to `/workdir` and `/home_host` in the container respectively.
 ```
 docker run -d \
-    --name rstudio \
     --log-opt max-size=50m \
     -p 8787:8787 \
     -e DOCKER_USER=`id -un` \
     -e DOCKER_USER_ID=`id -u` \
     -e DOCKER_PASSWORD=`id -un` \
     -e DOCKER_GROUP_ID=`id -g` \
-    -v /wwwroot:/workdir \
+    -e DOCKER_ADMIN_USER=`id -un` \
+    -v `pwd`:/workdir \
+    -v `dirname $HOME`:/home_host \
     dclong/rstudio
 ```
+
+The following command (**only work in Linux**) does the same as the above one 
+except that it limits the use of CPU and memory.
 ```
 docker run -d \
-    --name rstudio \
     --log-opt max-size=50m \
+    --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k \
+    --cpus=$((`nproc` - 1)) \
     -p 8787:8787 \
     -e DOCKER_USER=`id -un` \
     -e DOCKER_USER_ID=`id -u` \
     -e DOCKER_PASSWORD=`id -un` \
     -e DOCKER_GROUP_ID=`id -g` \
-    -v /wwwroot:/workdir \
-    registry.docker-cn.com/dclong/rstudio
+    -e DOCKER_ADMIN_USER=`id -un` \
+    -v `pwd`:/workdir \
+    -v `dirname $HOME`:/home_host \
+    dclong/rstudio
 ```
 ## Use the RStudio Server
 
@@ -88,6 +101,40 @@ You will be asked for user name (by default your user name on the host)
 and password (by default your user name on the host and might want to change it for security reasons).
 You can of course change your user password later
 using the command `passwd` in the container.  
+
+
+## Add a New User in the Docker Container
+
+By default,
+any user in the Docker container can visit the RStudio server.
+So if you want to grant access to a new user,
+just create an account for him in the Docker container.
+You can of course use the well know commands `useradd`, `adduser`, etc. to achive it.
+To make things easier for you,
+there are some shell scripts in the directory `/scripts/` to create usres for you.
+
+- `/scripts/create_user.sh`: Create a new user. It's the base script for creating users.
+- `/scripts/create_user_group.sh`: Create a new user with the given (existing) group.
+- `/scripts/create_user_nogroup.sh`: Create a new user with group name `nogroup`.
+- `/scripts/create_user_docker.sh`: Create a new user with group name `docker`.
+
+You can use the option `-h` to print help doc for these commands.
+For example, `/scripts/create_user_nogroup.sh -h` prints the below help doc.
+```
+Create a new user with the group name "nogroup".
+Syntax: create_user_nogroup user user_id [password]
+Arguments:
+user: user name
+user_id: user id
+password: Optional password of the user. If not provided, then the user name is used as the password.
+```
+Now suppose you want to create a new user `dclong` with user ID `2000` and group name `nogroup`,
+you can use the following command.
+```
+sudo /scripts/create_user_nogroup.sh dclong 2000
+```
+Since we didn't specify a password for the user,
+the default password (same as the user name) is used.
 
 ## Known Issues
 
@@ -100,15 +147,9 @@ using the command `passwd` in the container.
     I might switch to the [Supervisor](https://github.com/Supervisor/supervisor) for process management
     or use the base image of [pushion/ubuntu](https://github.com/phusion/baseimage-docker) in future.
 
-## Image Tree Related to [dclong/rstudio](https://hub.docker.com/r/dclong/rstudio/)
 
-[dclong/ubuntu_b](https://hub.docker.com/r/dclong/ubuntu_b/)
-
-- [dclong/r-base](https://hub.docker.com/r/dclong/r-base/)
-    - [dclong/r-pop](https://hub.docker.com/r/dclong/r-pop/)
-        - [dclong/rstudio](https://hub.docker.com/r/dclong/rstudio/)
-        
 ## About the Author
 
 [Personal Blog](http://www.legendu.net)   |   [GitHub](https://github.com/dclong)   |   [Bitbucket](https://bitbucket.org/dclong/)   |   [LinkedIn](http://www.linkedin.com/in/ben-chuanlong-du-1239b221/)
 
+## [Related Images](http://www.legendu.net/en/blog/my-docker-images/)
