@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -f Dockerfile -t dclong/rstudio:tm .
+docker build . -t dclong/rstudio:text_mining
