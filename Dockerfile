@@ -9,7 +9,7 @@ RUN apt-get update \
 
 EXPOSE 8787
 
-ADD settings/Rprofile.site /usr/local/lib/R/etc/
-# ADD userconf.sh /etc/cont-init.d/conf
-# ADD rstudio /etc/services.d/
-ADD scripts/launch.sh /scripts/
+COPY settings/Rprofile.site /usr/local/lib/R/etc/
+# COPY userconf.sh /etc/cont-init.d/conf
+# COPY rstudio /etc/services.d/
+COPY scripts /scripts
